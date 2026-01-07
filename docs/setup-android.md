@@ -106,9 +106,9 @@ In order to integrate DOTA into your Android project, please perform the followi
 
     *Note: If you need to dynamically use a different deployment, you can also override your deployment key in JS code using [Code-Push options](./api-js.md#CodePushOptions)*
 
-6. If you're using [DexGuard](https://www.guardsquare.com/dexguard), you need to add specific rules to ensure DOTA works correctly with obfuscated code.
+6. If you're using DexGuard/Proguard, you need to add specific rules to ensure DOTA works correctly with obfuscated code.
 
-    Add the following rules to your DexGuard configuration file:
+    Add the following rules to your configuration file:
 
     ```
     # Keep DOTA configuration strings (exact names from strings.xml)
