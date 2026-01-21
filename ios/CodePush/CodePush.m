@@ -213,6 +213,7 @@ static NSString *const LatestRollbackCountKey = @"count";
 + (void)overrideAppVersion:(NSString *)appVersion
 {
     [CodePushConfig current].appVersion = appVersion;
+    [[NSUserDefaults standardUserDefaults] setValue:appVersion forKey:@"OVERRIDE_APP_VERSION"];
 }
 
 + (void)setDeploymentKey:(NSString *)deploymentKey
@@ -702,6 +703,11 @@ static NSString *const LatestRollbackCountKey = @"count";
 }
 
 #pragma mark - JavaScript-exported module methods (Public)
+
+RCT_EXPORT_METHOD(overrideAppVersion:(NSString*)appVersionOverride)
+{
+    [CodePush overrideAppVersion:appVersionOverride];
+}
 
 /*
  * This is native-side of the RemotePackage.download method

@@ -260,7 +260,7 @@ declare namespace CodePush {
      * 
      * @param handleBinaryVersionMismatchCallback An optional callback for handling target binary version mismatch
      */
-    function checkForUpdate(deploymentKey?: string, handleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback): Promise<RemotePackage | null>;
+    function checkForUpdate(deploymentKey?: string, handleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback, appVersion?: string): Promise<RemotePackage | null>;
 
     /**
      * Retrieves the metadata for an installed update (e.g. description, mandatory).
@@ -308,6 +308,13 @@ declare namespace CodePush {
      * @param handleBinaryVersionMismatchCallback An optional callback for handling target binary version mismatch
      */
     function sync(options?: SyncOptions, syncStatusChangedCallback?: SyncStatusChangedCallback, downloadProgressCallback?: DownloadProgressCallback, handleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback): Promise<SyncStatus>;
+
+    /**
+     * Ovveride AppVersion for custom install.
+     *
+     * @param appVersionOverride string of app version, this will be used for codepush sync.
+     */
+    function overrideAppVersion(appVersionOverride: string): void;
 
     /**
      * Indicates when you would like an installed update to actually be applied.

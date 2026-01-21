@@ -797,4 +797,10 @@ public class CodePushNativeModule extends ReactContextBaseJavaModule {
     public void removeListeners(Integer count) {
         // Remove upstream listeners, stop unnecessary background tasks
     }
+
+    @ReactMethod
+    public void overrideAppVersion(String appVersionOverride) {
+        CodePushUtils.log("Override AppVersion to " + appVersionOverride);
+        mCodePush.overrideAppVersion(appVersionOverride);
+    }
 }

@@ -8,7 +8,7 @@ import hoistStatics from 'hoist-non-react-statics';
 let NativeCodePush = require("react-native").NativeModules.CodePush;
 const PackageMixins = require("./package-mixins")(NativeCodePush);
 
-async function checkForUpdate(deploymentKey = null, handleBinaryVersionMismatchCallback = null) {
+async function checkForUpdate(deploymentKey = null, handleBinaryVersionMismatchCallback = null, appVersion = null) {
   /*
    * Before we ask the server if an update exists, we
    * need to retrieve three pieces of information from the
@@ -26,7 +26,7 @@ async function checkForUpdate(deploymentKey = null, handleBinaryVersionMismatchC
    * dynamically "redirecting" end-users at different
    * deployments (e.g. an early access deployment for insiders).
    */
-  const config = deploymentKey ? { ...nativeConfig, ...{ deploymentKey } } : nativeConfig;
+  const config = deploymentKey ? { ...nativeConfig, ...{ deploymentKey }, ...(appVersion ? { appVersion } : {}) } : nativeConfig;
   const sdk = getPromisifiedSdk(requestFetchAdapter, config);
 
   // Use dynamically overridden getCurrentPackage() during tests.
@@ -306,6 +306,10 @@ function setUpTestDependencies(testSdk, providedTestConfig, testNativeBridge) {
 
 async function restartApp(onlyIfUpdateIsPending = false) {
   NativeCodePush.restartApp(onlyIfUpdateIsPending);
+}
+
+function overrideAppVersion(appVersionOverride) {
+  NativeCodePush.overrideAppVersion(appVersionOverride);
 }
 
 // This function allows only one syncInternal operation to proceed at any given time.
@@ -660,6 +664,7 @@ if (NativeCodePush) {
     notifyAppReady: notifyApplicationReady,
     notifyApplicationReady,
     restartApp,
+    overrideAppVersion,
     setUpTestDependencies,
     sync,
     disallowRestart: NativeCodePush.disallow,
